@@ -1,0 +1,307 @@
+Implement a `LinkedList` class in Java with methods to add, remove, retrieve, and display elements, ensuring efficient handling of edge cases without using Java's built-in collection classes.
+---------------------------------------------------------------------------------
+
+package linkedList;
+
+import java.util.Scanner;
+
+class LinkedList{
+	private Node head;
+	private Node tail;
+	
+	int size;
+	
+	public LinkedList(int size) {
+		super();
+		this.size = size;
+	}
+
+	private class Node{
+		private int value;
+		private Node next;
+		
+		public Node(int value) {
+			this.value=value;
+		}
+		public Node(int value, Node next) {
+			super();
+			this.value = value;
+			this.next = next;
+		}
+			
+	}
+	public Node  getindex(int n) {
+		Node temp=head;
+		for(int i=0;i<n;i++) {
+			temp=temp.next;
+		}
+		return temp;
+	}
+	
+	public int listSize() {
+		Node temp=head;
+		int n=0;
+		while(temp!=null) {
+			temp=temp.next;
+			n++;
+		}
+		return n;
+	}
+	
+	public void insertAtBegining(int value) {
+		Node node=new Node(value);
+		
+		node.next=head;
+		head=node;
+		if(tail==null) {
+			tail=head;
+		}
+		size++;
+	}
+	
+	public void insertAtEnd(int value) {
+		if(tail==null) {
+			insertAtBegining(value);
+		}
+		Node node=new Node(value);
+		
+		tail.next=node;
+		tail=node;
+		
+		size++;
+	}
+	
+	public void insertAtPosition(int value,int index) {
+		if(index==0) {
+			insertAtBegining(value);
+		}
+		else if(index==size) {
+			insertAtEnd(value);
+		}
+		else {
+			Node temp=head;
+			
+			for(int i=1;i<index;i++) {
+				temp=temp.next;
+			}
+			Node node=new Node(value,temp.next);
+			temp.next=node;
+			
+			size++;
+			
+		}
+	}
+	public boolean isNull() {
+		if(head==null) {
+			return true;
+		}
+		return false;
+	}
+	public int deleteAtBegining() {
+		if(isNull()) {
+			System.out.println("List is Empty");
+		}
+		
+		int value=head.value;
+		head=head.next;
+		if(head==null) {
+			tail=null;
+		}
+		size--;
+		return value;
+	}
+	
+	public int deleteAtEnd() {
+		if(isNull()) {
+			System.out.println("List is Empty");
+		}
+		//get size of list
+		int n=listSize();
+		if(n==1) {
+			int val=deleteAtBegining();
+			return val; 
+		}
+
+		else {
+			//get node at particular index n
+			Node temp1=getindex(n-2);
+		
+			int val=tail.value;
+			tail=temp1;
+			tail.next=null;
+			size--;
+			return val;
+		}
+	}
+	
+	public int deleteAtIndex(int index) {
+		Node temp1=getindex(index-1);
+		Node temp2=getindex(index+1);
+		int val=temp1.next.value;
+		temp1.next=temp2;
+		size--;
+		return val;
+	}
+	
+	public void display() {
+		Node temp=head;
+		while(temp!=null) {
+			System.out.print(temp.value+" -> ");
+			temp=temp.next;
+		}
+		System.out.println("END");
+	}
+
+	
+	
+}
+
+
+public class Task4 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		LinkedList ll1=new LinkedList(1000);
+		Scanner sc=new Scanner(System.in);
+		
+		System.out.println("LinkedList Implementation: ");
+		System.out.println("--------------------------");
+		
+		int choice;
+		do {
+			
+			System.out.println("A. Enter 1 to INSERT.         B. Enter 2 to DELETE.");
+			System.out.println("C. Enter 3 to Check SIZE.     D. Enter 4 to check If LIST is Empty.");
+			System.out.println("E. Enter 5 to DISPLAY List.   F. Enter 0 to EXIT.");
+			System.out.println("-------------------------------------------------");
+			
+			choice=sc.nextInt();
+			
+			if(choice==1) {
+			
+				int ch;
+				do {
+					
+					System.out.println("A. Enter 1 to InsertAtBegining.    B. Enter 2 to InsertAtEnd.");
+					System.out.println("C. Enter 3 to InsertAtPosition.    D. Enter -1 Exit.");
+					System.out.println("----------------------------------------------------");
+					ch=sc.nextInt();
+					
+					if(ch==1) {
+						
+						System.out.println("Enter elements:");
+						ll1.insertAtBegining(sc.nextInt());
+						ll1.display();
+						System.out.println("----------------------------------------------------");
+						
+					}
+					
+					
+					if(ch==2) {
+						System.out.println("Enter element: ");
+						ll1.insertAtEnd(sc.nextInt());
+						ll1.display();
+						System.out.println("----------------------------------------------------");
+						
+					}
+					if(ch==3) {
+				
+						System.out.println("Enter index:");
+						int index=sc.nextInt();	
+						System.out.println("Enter Value");
+						int value=sc.nextInt();
+						ll1.insertAtPosition(value,index);
+						ll1.display();
+						System.out.println("----------------------------------------------------");
+						
+					}
+				
+				}while(ch!=-1);
+			}
+			
+			if(choice==2) {
+				if(ll1.listSize()==0) {
+					System.out.println("List is Already Empty!");
+				}
+				else {
+					int ch;
+					do {
+					
+						System.out.println("A. Enter 1 to DeleteAtBegining.    B. Enter 2 to DeleteAtEnd.");
+						System.out.println("C. Enter 3 to DeleteAtPosition.    D. Enter -1 Exit.");
+						System.out.println("----------------------------------------------------");
+						ch=sc.nextInt();
+						
+						if(ch==1) {
+							if(ll1.isNull()) {
+								System.out.println("List is Already Empty!");
+							}
+							else {
+								int deleted=ll1.deleteAtBegining();
+								System.out.println("Deleted Element: "+deleted);
+								ll1.display();
+								System.out.println("----------------------------------------------------");
+							}
+						}
+					
+					
+						if(ch==2) {
+							if(ll1.isNull()) {
+								System.out.println("List is Already Empty!");
+							}
+							else {
+								int deleted=ll1.deleteAtEnd();
+								System.out.println("Deleted Element: "+deleted);
+								ll1.display();
+							}
+							System.out.println("----------------------------------------------------");
+							
+						}
+						if(ch==3) {
+							if(ll1.isNull()) {
+								System.out.println("List is Already Empty!");
+							}
+							else {
+								System.out.println("Enter index:");
+								int index=sc.nextInt();	
+								if(index>ll1.listSize()) {
+									System.out.println("Index does NOT exist!");
+								}
+							
+								else {
+									int deleted=ll1.deleteAtIndex(index);
+									System.out.println("Deleted Element: "+deleted+" at Index: "+index);
+									ll1.display();
+								}
+								System.out.println("----------------------------------------------------");
+							}
+						}
+				
+					}while(ch!=-1);
+					
+				}
+			}
+				
+			if(choice==3) {
+				
+				System.out.println("List Size: "+ll1.listSize());
+				System.out.println("----------------------------------------------------");
+				
+			}
+			
+			if(choice==4) {
+				System.out.println("Is List Empty? "+ll1.isNull());
+				System.out.println("----------------------------------------------------");
+				
+			}
+			if(choice==5) {
+				System.out.println("List: ");
+				ll1.display();
+				System.out.println("----------------------------------------------------");
+				
+			}
+		}while(choice!=0);
+		sc.close();
+	}
+
+}

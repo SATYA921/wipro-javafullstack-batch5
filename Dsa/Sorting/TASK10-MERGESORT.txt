@@ -1,0 +1,81 @@
+"Implement the Merge Sort algorithm in Java to efficiently sort an array of integers.
+
+"
+---------------------------------------------------------------------------------
+
+
+package dataStructure_sort;
+
+import java.util.Arrays;
+
+public class MergeSort {
+	public static void mergeSort(int[] array, int left, int right) {
+        if (left < right) {
+          
+            int middle = (left + right) / 2;
+
+             mergeSort(array, left, middle);
+            mergeSort(array, middle + 1, right);
+
+            merge(array, left, middle, right);
+        }
+    }
+	
+	private static void merge(int[] array, int left, int middle, int right) {
+        
+		int n1 = middle - left + 1;
+        int n2 = right - middle;
+
+       
+        int[] leftArray = new int[n1];
+        int[] rightArray = new int[n2];
+
+        for (int i = 0; i < n1; ++i) {
+            leftArray[i] = array[left + i];
+        }
+        for (int j = 0; j < n2; ++j) {
+            rightArray[j] = array[middle + 1 + j];
+        }
+
+        int i = 0, j = 0;
+
+        int k = left;
+        while (i < n1 && j < n2) {
+            if (leftArray[i] <= rightArray[j]) {
+                array[k] = leftArray[i];
+                i++;
+            } else {
+                array[k] = rightArray[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < n1) {
+            array[k] = leftArray[i];
+            i++;
+            k++;
+        }
+
+        while (j < n2) {
+            array[k] = rightArray[j];
+            j++;
+            k++;
+        }
+    }
+	
+	private static void printArray(int[] arr) {
+		System.out.println(Arrays.toString(arr));
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[] arr= {10,9,8,7,6,5,4,3,2,1};
+		System.out.println("Entered Array:");
+		printArray(arr);
+		System.out.println("----------------------------");
+		mergeSort(arr,0,arr.length-1);
+		printArray(arr);
+	}
+
+}

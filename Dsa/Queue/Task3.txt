@@ -1,0 +1,128 @@
+Implement a generic Queue data structure in Java using a linked list. The Queue should support the basic operations of enqueue, dequeue, peek, and check if the queue is empty.
+-------------------------------------------------------------------------------
+
+package queue;
+
+import java.util.Scanner;
+
+class Queue{
+	static private int front,rear,capacity;;
+	static private int queue[];
+	public Queue() {
+		super();
+		front=rear=0;
+		capacity=10000;
+		queue=new int[capacity];
+	}
+	boolean isEmpty() {
+		if(front==rear)
+			return true;
+		return false;
+	}
+	void queueEnque(int data) {
+		if(capacity==rear) {
+			System.out.println("Queue is Full");
+		}
+		else {
+			queue[rear]=data;
+			rear++;
+		}
+	}
+	void queueDeque() {
+		if(isEmpty()==false) {
+			System.out.println("Deleted element: "+queue[front]);
+			System.out.println("Queue after deleting an element: ");
+			
+			for(int i=0;i<rear-1;i++) {
+				queue[i]=queue[i+1];
+			}
+			if(rear<capacity) {
+				queue[rear]=0;
+					
+			}
+			rear--;
+		}
+		
+	}
+	void queueFront() {
+		if(isEmpty()==false) {
+			System.out.print("Front Element of Queue: ");
+			System.out.println(queue[front]);
+		}
+		else {
+			System.out.println("Queue is EMPTY!");
+		}
+	}
+	void display() {
+		if(isEmpty()==false) {
+			for(int i=front;i<rear;i++) {
+				System.out.print(queue[i]+" <-- ");
+			}
+			System.out.println();
+		}
+		else {
+			System.out.println("Queue is EMPTY!");
+		}
+	}
+}
+
+
+public class Task3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		
+		System.out.println("Queue Implementation: ");
+		System.out.println("---------------------");
+		Queue queue1=new Queue();
+		
+		
+		int choice;
+		do {
+			
+			System.out.println("A. Enter 1 to ENQUE.        B. Enter 2 to DEQUE.");
+			System.out.println("C. Enter 3 to PEEK.         D. Enter 4 to check If Queue is Empty.");
+			System.out.println("           E. Enter 0 to EXIT.");
+			System.out.println("------------------------------------------");
+			
+			choice=sc.nextInt();
+			
+			if(choice==1) {
+		
+				System.out.println("Enter number of elements you want to Enqueue: ");
+				int size=sc.nextInt();
+				System.out.println("Enter "+size+" elements:");
+				for(int i=0;i<size;i++) {
+					queue1.queueEnque(sc.nextInt());
+				}
+				System.out.println("------------------------------------------");
+				
+				System.out.println("Queue Elements:");
+				queue1.display();
+				System.out.println("------------------------------------------");
+			}
+				
+			if(choice==2) {
+				queue1.queueDeque();
+				queue1.display();
+				System.out.println("------------------------------------------");
+			}
+		
+			if(choice==3) {
+		
+			queue1.queueFront();
+			System.out.println("------------------------------------------");
+			
+			}
+			
+			if(choice==4) {
+				System.out.println("Is Queue Empty? "+queue1.isEmpty());
+				System.out.println("------------------------------------------");
+				
+			}
+		
+		}while(choice!=0);
+		sc.close();
+	}
+}

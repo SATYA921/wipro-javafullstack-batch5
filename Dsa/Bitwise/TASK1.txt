@@ -1,0 +1,46 @@
+Create a function that counts the number of set bits (1s) in the binary representation of an integer. Extend this to count the total number of set bits in all integers from 1 to n.
+-------------------------------------------------------------------------------
+
+package bitManipulation;
+
+import java.util.Scanner;
+
+public class Task1 {
+public static int countSetBits(int n) {
+		int count=0;
+		while(n>0) {
+			n&=(n-1);
+			count++;
+		}
+		return count;
+	}
+	private static int countTotalSetBits(int n) {
+		int count=0;
+		for(int i=1;i<=n;i++) {
+			count+=countBitsUtil(i);
+		}
+		return count;
+	}
+	private static int countBitsUtil(int x) {
+		// TODO Auto-generated method stub
+		int count=0;
+		while(x>0) {
+			count+=x&1;
+			x>>=1;
+		}
+		return count;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		System.out.print("Enter the Number: ");
+		int n=sc.nextInt();
+		System.out.println("Binary Representation of "+n+ " : "+Integer.toBinaryString(n));
+		System.out.println("No. of Set Bits in "+n+" is : "+countSetBits(n));
+				
+		int result=countTotalSetBits(n);
+		System.out.println("Total Set Bits from 1 to "+n+" : "+result);
+		sc.close();
+	}
+
+}

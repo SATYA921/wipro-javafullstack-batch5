@@ -1,0 +1,76 @@
+Write a Union-Find data structure with path compression. Use this data structure to detect a cycle in an undirected graph.
+
+------------------------------------------------------------------------------
+
+package Day4;
+
+class DisjointSet{
+	private int[] parent;
+	private int[] rank;
+	
+	public DisjointSet(int n) {
+		super();
+		parent = new int[n];
+		rank = new int[n];
+		
+		for(int i=0;i<n;i++) {
+			parent[i]=i;
+			rank[i]=0;
+		}
+	}
+	
+	public int find(int x) {
+		if(parent[x] != x) {
+			parent[x] = find(parent[x]);
+		}
+		return parent[x];
+	}
+	
+	
+	public void union(int x,int y) {
+		int rootx=find(x);
+		int rooty=find(y);
+		
+		if(rootx != rooty) {
+			
+			if(rank[rootx] > rank[rooty]) {
+				parent[rooty]=rootx;
+			}
+			else if(rank[rootx] < rank[rooty]) {
+				parent[rootx]=rooty;
+			}
+			else {
+				parent[rooty]=rootx;
+				rank[rootx]++;
+			}
+		}
+	}
+	
+	public boolean isConnected(int x, int y) {
+		return find(x)==find(y);
+	}
+	
+}
+
+public class DisjointUnionSet {
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int n=5;
+		DisjointSet ds=new DisjointSet(n);
+		
+		ds.union(0, 2);
+		ds.union(4, 2);
+		ds.union(3, 1);
+		
+		
+		System.out.println("(0,4) are connected: "+ds.isConnected(0, 4));
+		System.out.println("(1,0) are connected: "+ds.isConnected(1, 0));
+		System.out.println("(3,2) are connected: "+ds.isConnected(3, 2));
+		System.out.println("(2,4) are connected: "+ds.isConnected(2, 4));
+		
+		
+		
+	}
+
+}

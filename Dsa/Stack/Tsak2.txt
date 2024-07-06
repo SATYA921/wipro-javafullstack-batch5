@@ -1,0 +1,118 @@
+"Implement a stack data structure in Java. A stack is a linear data structure that follows the Last In First Out (LIFO) principle. Your task is to create a class Stack that supports the following operations:
+
+push(element): Add an element to the top of the stack.
+pop(): Remove and return the top element of the stack. If the stack is empty, return an appropriate error message or exception.
+peek(): Return the top element of the stack without removing it. If the stack is empty, return an appropriate error message or exception.
+isEmpty(): Return true if the stack is empty, otherwise return false.
+size(): Return the number of elements in the stack."
+
+
+-------------------------------------------------------------------------------
+
+
+package stack;
+
+import java.util.Scanner;
+
+class Stack{
+	final int max=1000;
+	int top;
+	int a[]=new int[max];
+	
+	boolean isEmpty() {
+		return(top<0);
+		}
+	Stack(){
+		top=-1;
+	}
+	void push(int data) {
+		if(top>=(max-1)) {
+			System.out.println("Stack OverFlow");
+		}
+		else {
+			a[++top]=data;
+			
+		}
+	}
+	int pop() {
+		if(isEmpty()) {
+			return -1;
+		}
+		else {
+			int x=a[top--];
+			return x;
+		}
+	}
+	int peek() {
+		if(top<0) {
+			System.out.println("Stack Underflow");
+			return -1;
+		}
+		else {
+			int x=a[top];
+			return x;
+		}
+	}
+	
+	void print() {
+		for(int i=top;i>-1;i--) {
+			System.out.println(" "+a[i]);
+		}
+	}
+}
+public class Task2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		Stack s1=new Stack();
+		
+		System.out.println("Stack Implementation");
+		System.out.println("--------------------");
+		int choice;
+		do {
+			
+			System.out.println("Enter 1 to PUSH.          Enter 2 to POP.");
+			System.out.println("Enter 3 to PEEK.          Enter 4 to check Stack is Empty.");
+			System.out.println("Enter 5 to check SIZE     Enter 0 to EXIT.");
+			System.out.println("------------------------------------------");
+			choice=sc.nextInt();
+			if(choice==1) {
+		
+				System.out.println("Enter number of elements you want to push in the Stack: ");
+				int size=sc.nextInt();
+				System.out.println("Push elements:");
+				for(int i=0;i<size;i++) {
+					s1.push(sc.nextInt());
+				}
+				System.out.println("Stack Elements:");
+				s1.print();
+				System.out.println("----------------------");
+			}
+			
+			if(choice == 2) {
+				System.out.println("After Popping an element:");
+				System.out.println("Popped Element is: "+s1.peek());
+				s1.pop();
+				s1.print();
+		
+				System.out.println("----------------------");
+		
+			}
+			if(choice==3) {
+				System.out.print("Top Element of Stack: ");
+				System.out.println(s1.peek());
+				System.out.println("----------------------");
+			}
+			if(choice==4) {
+				System.out.println("Is stack Empty?  "+s1.isEmpty());
+				System.out.println("----------------------");
+			}
+			if(choice==5) {
+				System.out.println("Size of Stack: "+s1.top);
+				System.out.println("----------------------");
+			}
+		}while(choice!=0);
+		sc.close();
+	}
+}
